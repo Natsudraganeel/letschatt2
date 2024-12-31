@@ -43,7 +43,7 @@ export const registercontroller=async(req,res)=>{
            //create token for authentication
            const token= JWT.sign({id:user._id,email:user.email},process.env.JWT_SECRET,{expiresIn:'1d'});//signing the payload which contains _id of the user
            // didnot do await JWT as await has no effect on it
-               res.send({// .cookie i found in gfg cookie-parser article
+               res.send({
             success:true,
             message: 'login successful',
          token:token});}
@@ -70,10 +70,11 @@ export const registercontroller=async(req,res)=>{
     
 export const userdetails=async (req,res)=>{
     try{
-    const token=req.cookies.token || "";
-        console.log(token);
+    // const token=req.cookies.token || "";
+        
     // console.log("token:-",req.cookies);
-        // const token=req.body.token || "";
+        const token=req.body.token || "";
+        console.log(token);
     const user=await getuserdetails(token);
     res.send({
         success:true,
