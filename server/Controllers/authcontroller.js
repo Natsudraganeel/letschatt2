@@ -43,12 +43,17 @@ export const registercontroller=async(req,res)=>{
            //create token for authentication
            const token= JWT.sign({id:user._id,email:user.email},process.env.JWT_SECRET,{expiresIn:'1d'});//signing the payload which contains _id of the user
            // didnot do await JWT as await has no effect on it
-           
-           res.cookie('token',token,{sameSite:'none',secure:true}).send({// .cookie i found in gfg cookie-parser article
+               res.send({// .cookie i found in gfg cookie-parser article
             success:true,
             message: 'login successful',
          token:token});}
          }
+           
+         //   res.cookie('token',token,{sameSite:'none',secure:true}).send({// .cookie i found in gfg cookie-parser article
+         //    success:true,
+         //    message: 'login successful',
+         // token:token});}
+         // }
            // http:true -Ensures the cookie is only sent over HTTP(S) and not accessible via JavaScript
 // secure:true  // Ensures the cookie is only sent over HTTPS
            
