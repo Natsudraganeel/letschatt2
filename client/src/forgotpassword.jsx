@@ -119,6 +119,7 @@ export default function Forgotpassword(){
               if(res.data.success===true && sentotp==ans){
                
                 console.log(typeof(res.data.token));
+                  localStorage.setItem("token",res.data.token);
                 document.cookie="token="+res.data.token;
                 dispatch(settoken(res.data.token));
                 //alert("success");
