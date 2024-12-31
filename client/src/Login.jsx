@@ -57,6 +57,7 @@ console.log(err.message)
          if(res.data.success===true){
           console.log(res.data.token);
           dispatch(settoken(res.data.token));
+           document.cookie="token="+res.data.token;
            localStorage.setItem("token", res.data.token);
               nav("/");
          }
