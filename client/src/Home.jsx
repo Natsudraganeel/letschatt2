@@ -35,7 +35,7 @@ console.log(msg);
             //   withCredentials:true// the credential is token saved in browser in cookie section
             // })
                 var tok=localStorage.getItem('token');
-            const res=await axios.post( "https://letschatt2-backend.onrender.com/api/auth/user-details",{token:tok};
+            const res=await axios.post( "https://letschatt2-backend.onrender.com/api/auth/user-details",{token:tok});
             dispatch(setuser(res.data.data));
         console.log(res.data.data);
             if(res.data.data.logout===true){
