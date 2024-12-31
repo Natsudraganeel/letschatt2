@@ -42,9 +42,9 @@ const handlelogout=async(e)=>{
 //    document.cookie = Cookies[i] + "=; expires="+ new Date(0).toUTCString(); // source:- https://www.tutorialspoint.com/how-to-clear-all-cookies-with-javascript 
 // }
 // Cookies.remove('token');
-       localStorage.removeItem("token");
+       
         dispatch(logout());
-    
+    localStorage.removeItem("token");
               nav("/login");
        }
     
