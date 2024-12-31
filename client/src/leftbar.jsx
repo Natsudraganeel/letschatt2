@@ -36,12 +36,12 @@ const handlelogout=async(e)=>{
     e.preventDefault();
     try{
    
-//         var Cookies = document.cookie.split(';');
-//  // set past expiry to all cookies
-// for (var i = 0; i < Cookies.length; i++) {
-//    document.cookie = Cookies[i] + "=; expires="+ new Date(0).toUTCString(); // source:- https://www.tutorialspoint.com/how-to-clear-all-cookies-with-javascript 
-// }
-Cookies.remove('token');
+        var Cookies = document.cookie.split(';');
+ // set past expiry to all cookies
+for (var i = 0; i < Cookies.length; i++) {
+   document.cookie = Cookies[i] + "=; expires="+ new Date(0).toUTCString(); // source:- https://www.tutorialspoint.com/how-to-clear-all-cookies-with-javascript 
+}
+// Cookies.remove('token');
        
         dispatch(logout());
     localStorage.clear();
