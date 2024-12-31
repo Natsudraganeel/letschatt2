@@ -70,9 +70,10 @@ export const registercontroller=async(req,res)=>{
     
 export const userdetails=async (req,res)=>{
     try{
-    // const token=req.cookies.token || "";
+    const token=req.cookies.token || "";
+        console.log(token);
     // console.log("token:-",req.cookies);
-        const token=req.body.token || "";
+        // const token=req.body.token || "";
     const user=await getuserdetails(token);
     res.send({
         success:true,
