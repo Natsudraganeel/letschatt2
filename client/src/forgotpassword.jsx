@@ -22,7 +22,7 @@ export default function Forgotpassword(){
             event.preventDefault();
     console.log(email);
             try{
-              const res=await axios.post("http://localhost:3000/api/auth/forgotpassword",{
+              const res=await axios.post("https://letschatt2-backend.onrender.com/api/auth/forgotpassword",{
                 email
               })
               console.log(res.data);
@@ -106,7 +106,7 @@ export default function Forgotpassword(){
             try{
             const res=await axios({
                 method:"post",
-                url:"http://localhost:3000/api/auth/forgotpassword",
+                url:"https://letschatt2-backend.onrender.com/api/auth/forgotpassword",
                 data:{
                   email,
                   
