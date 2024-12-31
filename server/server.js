@@ -9,7 +9,7 @@ import {app,server} from "./socket/index.js"
 dotenv.config();
 
 app.use(cors({
-    origin : process.env.FRONTEND_URL, // to allow cookies to be sent from origin (frontend url ) to backend
+    origin : "https://letschatt2.onrender.com", // to allow cookies to be sent from origin (frontend url ) to backend
     credentials : true
 }));
 app.use(express.json());
