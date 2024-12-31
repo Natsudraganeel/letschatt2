@@ -31,7 +31,7 @@ console.log(msg);
              try{
             const res=await axios({
            
-              url:"http://localhost:3000/api/auth/user-details",
+              url:"https://letschatt2-backend.onrender.com/api/auth/user-details",
               withCredentials:true// the credential is token saved in browser in cookie section
             })
             dispatch(setuser(res.data.data));
@@ -57,7 +57,7 @@ console.log(msg);
        useEffect(()=>{
         var tok=Cookies.get('token');
         console.log("tok=",tok);
-        const socketconnection=io("http://localhost:3000",{
+        const socketconnection=io("https://letschatt2-backend.onrender.com",{
           auth:{
             token:tok
           }
