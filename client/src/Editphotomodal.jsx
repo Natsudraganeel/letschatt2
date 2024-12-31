@@ -83,7 +83,7 @@ x="abcd";
    console.log(uploadPhoto);
 }
 console.log("x="+x);
-const res=await axios.put("http://localhost:3000/api/auth/updateinfo",{
+const res=await axios.put("https://letschatt2-backend.onrender.com/api/auth/updateinfo",{
 id:user._id,
 name:name,
 profile_pic:x
