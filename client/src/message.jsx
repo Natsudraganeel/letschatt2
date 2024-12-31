@@ -40,7 +40,7 @@ const [message,setmessage]=useState({
 })
 const handleallmessages=async()=>{
    try{
-   const res=await axios.get(`http://localhost:3000/api/auth/conversation/${user._id}/${friend._id}`);
+   const res=await axios.get(`https://letschatt2-backend.onrender.com/api/auth/conversation/${user._id}/${friend._id}`);
    if(res.data.success===true){
       setallmessage(res.data.converse);
    }
