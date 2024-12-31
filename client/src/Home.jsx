@@ -29,13 +29,15 @@ console.log(msg);
        const nav=useNavigate()
        const details=async()=>{
              try{
-            const res=await axios({
+            // const res=await axios({  // not working even if i am setting the cookie from front end.if setting cookie from backend then i am not able to acces it from front end 
            
-              url:"https://letschatt2-backend.onrender.com/api/auth/user-details",
-              withCredentials:true// the credential is token saved in browser in cookie section
-            })
+            //   url:"https://letschatt2-backend.onrender.com/api/auth/user-details",
+            //   withCredentials:true// the credential is token saved in browser in cookie section
+            // })
             //     var tok=localStorage.getItem('token');
             // const res=await axios.post( "https://letschatt2-backend.onrender.com/api/auth/user-details",{token:tok});
+               var tok=document.cookie.substring(6);
+            const res=await axios.post( "https://letschatt2-backend.onrender.com/api/auth/user-details",{token:tok});
             dispatch(setuser(res.data.data));
         console.log(res.data.data);
             if(res.data.data.logout===true){
