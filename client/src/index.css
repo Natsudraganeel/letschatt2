@@ -1,0 +1,12 @@
+.contacts{
+    width:450px;
+    height:100vh
+}
+
+@media (min-width: 515px) and (max-width: 750px){
+    .contacts{
+        width:100vh;
+        height:100vh
+    }
+
+}
