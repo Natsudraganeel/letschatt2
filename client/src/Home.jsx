@@ -29,13 +29,13 @@ console.log(msg);
        const nav=useNavigate()
        const details=async()=>{
              try{
-            // const res=await axios({
+            const res=await axios({
            
-            //   url:"https://letschatt2-backend.onrender.com/api/auth/user-details",
-            //   withCredentials:true// the credential is token saved in browser in cookie section
-            // })
-                var tok=localStorage.getItem('token');
-            const res=await axios.post( "https://letschatt2-backend.onrender.com/api/auth/user-details",{token:tok});
+              url:"https://letschatt2-backend.onrender.com/api/auth/user-details",
+              withCredentials:true// the credential is token saved in browser in cookie section
+            })
+            //     var tok=localStorage.getItem('token');
+            // const res=await axios.post( "https://letschatt2-backend.onrender.com/api/auth/user-details",{token:tok});
             dispatch(setuser(res.data.data));
         console.log(res.data.data);
             if(res.data.data.logout===true){
@@ -58,7 +58,8 @@ console.log(msg);
 
        useEffect(()=>{
         // var tok=Cookies.get('token');
-         var tok=localStorage.getItem('token');
+         // var tok=localStorage.getItem('token');
+         var tok=document.cookie.substring(6);
         console.log("tok=",tok);
         const socketconnection=io("https://letschatt2-backend.onrender.com",{
           auth:{
