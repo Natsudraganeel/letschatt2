@@ -50,7 +50,10 @@ const handleallmessages=async()=>{
    }
 }
 const handleDownload = (url, filename) => {
-   axios.get(url, {
+   var lake=url.substring(0,4)+"s"+url.substring(4);
+   console.log("lake:-",lake);
+   console.log("url:-",url);
+   axios.get(lake, {
      responseType: 'blob',
    })
    .then((res) => {
