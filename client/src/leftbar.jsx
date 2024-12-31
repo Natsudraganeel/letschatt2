@@ -44,7 +44,7 @@ const handlelogout=async(e)=>{
 Cookies.remove('token');
        
         dispatch(logout());
-    localStorage.removeItem("token");
+    localStorage.clear();
               nav("/login");
        }
     
