@@ -55,7 +55,8 @@ console.log(msg);
 
 
        useEffect(()=>{
-        var tok=Cookies.get('token');
+        // var tok=Cookies.get('token');
+         var tok=localStorage.getItem('token');
         console.log("tok=",tok);
         const socketconnection=io("https://letschatt2-backend.onrender.com",{
           auth:{
