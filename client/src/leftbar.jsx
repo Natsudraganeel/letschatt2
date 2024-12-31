@@ -41,7 +41,7 @@ const handlelogout=async(e)=>{
 // for (var i = 0; i < Cookies.length; i++) {
 //    document.cookie = Cookies[i] + "=; expires="+ new Date(0).toUTCString(); // source:- https://www.tutorialspoint.com/how-to-clear-all-cookies-with-javascript 
 // }
-// Cookies.remove('token');
+Cookies.remove('token');
        
         dispatch(logout());
     localStorage.removeItem("token");
