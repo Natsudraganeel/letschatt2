@@ -59,8 +59,8 @@ console.log(online);
             const usersarr=Array.from(ans);
             const conusers=await User.find({ _id: { $in: usersarr } });
             const mixed=Array.from(theusers);
-            conusers.sort((a,b)=>{a._id.toString().localeCompare(b._id.toString())});
-            mixed.sort((a,b)=>{a.friend.localeCompare(b.friend)});
+            conusers.sort((a,b)=>{return a._id.toString().localeCompare(b._id.toString())});// return dena imp.otherwise sort will not happen.also _id is object so to be converted to string
+            mixed.sort((a,b)=>{return a.friend.localeCompare(b.friend)});
             console.log("consusers",conusers);
             console.log("mixed",mixed);
             const realans=[];
