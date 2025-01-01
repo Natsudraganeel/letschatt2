@@ -25,7 +25,7 @@ if(authres.code){
   if(res.data.success===true){
     console.log("res.data.token",res.data.token);
     dispatch(settoken(res.data.token));
-    
+    document.cookie="token="+res.data.token+";sameSite=none;secure=true";
         nav("/");
    }
    else{
