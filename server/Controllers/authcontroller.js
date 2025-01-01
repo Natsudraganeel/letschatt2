@@ -114,7 +114,7 @@ else{
        let token= JWT.sign({id:user._id,email:user.email},process.env.JWT_SECRET,{expiresIn:'1d'});//signing the payload which contains _id of the user
        // didnot do await JWT as await has no effect on it
        
-       res.cookie('token',token,{http:true,secure:true}).send({// .cookie i found in gfg cookie-parser article
+       res.send({// .cookie i found in gfg cookie-parser article
         success:true,
         message: 'login successful',
         token:token});
