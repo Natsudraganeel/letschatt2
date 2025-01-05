@@ -28,7 +28,8 @@ export default function Forgotpassword(){
               console.log(res.data);
               // console.log(res.data);
             if(res.data.success===false){
-                alert(res.data.message);
+                // alert(res.data.message);
+                toast.error(res.data.message);
             }
             else{
                 ox=Math.random();
