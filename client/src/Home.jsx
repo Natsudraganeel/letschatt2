@@ -44,7 +44,7 @@ console.log(msg);
             });
             dispatch(setuser(res.data.data));
         // console.log(res.data.data);
-           if(res.data.data.logout===true){
+           if(res.data.data.logout===true || res.data.data.message==="Session Expired.Relogin!"){
               // dispatch(logout());
 
 try{
