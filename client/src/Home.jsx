@@ -37,7 +37,9 @@ console.log(msg);
             //     var tok=localStorage.getItem('token');
             // const res=await axios.post( "https://letschatt2-backend.onrender.com/api/auth/user-details",{token:tok});
                var tok=document.cookie.substring(6);
-            const res=await axios.post( "https://letschatt2-backend.onrender.com/api/auth/user-details",{token:tok});
+            const res=await axios.get( "https://letschatt2-backend.onrender.com/api/auth/user-details",{
+              withCredentials:true
+            });
             dispatch(setuser(res.data.data));
         console.log(res.data.data);
             if(res.data.data.logout===true){
