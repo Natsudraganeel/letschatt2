@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import axios from "axios"
 import Cookies from 'js-cookie';
 import { useDispatch,useSelector } from "react-redux"
+import toast, { Toaster } from 'react-hot-toast';
 import { setuser,logout,setonlineusers,setsocketConnection } from "./redux/userslice";
 import { useNavigate,useParams } from "react-router-dom";
 import Leftbar from "./leftbar";
@@ -122,6 +123,6 @@ try{
         )
         }
       
-       
+       <Toaster/>
        </pre>)
 }
