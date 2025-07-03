@@ -68,10 +68,10 @@ export default function Contacts({setmsg,setfriend,hide,sethide,allmessage}){
                         return(
                             <>
                              <div onClick={()=>{  
-                                if(!document.cookie){
-                            toast.error("session expired.Relogin!");
-                            return ;
-                                }   
+                            //     if(!document.cookie){
+                            // toast.error("session expired.Relogin!");
+                            // return ;
+                            //     }   
    sethide(true);setmsg(true);setfriend(see.conuser)}} className="flex my-1 py-1 bg-slate-300">
                              <div className="relative w-12 h-12 flex items-center justify-center hover:bg-slate-400 ">
                              <Avatar theuser={see.conuser}  />
