@@ -18,7 +18,7 @@ try{
 if(authres.code){
   const res=await axios({
     method:"get",
-    url:`http://localhost:3000/api/auth/google?code=${authres.code}`,
+    url:`https://letschatt2-backend.onrender.com/api/auth/google?code=${authres.code}`,
     withCredentials:true
   });// withCredentials:true na korle browser e application e cookies  sectione store hobe na/By default withCredentials:false
   console.log(res.data);
@@ -51,7 +51,7 @@ console.log(err.message)
     try{
          const res=await axios({
           method:"post",
-          url:"http://localhost:3000/api/auth/login",
+          url:"https://letschatt2-backend.onrender.com/api/auth/login",
           data:{
             email,
             password
