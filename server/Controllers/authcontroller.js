@@ -51,7 +51,7 @@ export const registercontroller=async(req,res)=>{
         //  token:token});}
         //  }
            //if we define a maxage the browser deletes the cookie after that time automatically
-           res.cookie('token',token,{maxAge: 1000 * 60 * 180}).send({// .cookie i found in gfg cookie-parser article
+           res.cookie('token',token,{maxAge: 1000 * 60 * 180,secure:true,sameSite:'None'}).send({// .cookie i found in gfg cookie-parser article
             success:true,
             message: 'login successful',
          token:token});}
