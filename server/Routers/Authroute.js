@@ -1,7 +1,7 @@
 import express from "express"
 import { requiredsignin } from "../Middlewares/authmiddleware.js";
 import {registercontroller,logincontroller,userdetails,googleauth,updateinfocontroller,searchcontroller,conversationcontroller,
-    forgotcontroller,emailcheck,DeleteAllMessagesController,logoutcontroller} from "../Controllers/authcontroller.js"
+    forgotcontroller,emailcheck,logoutcontroller} from "../Controllers/authcontroller.js"
 const router=express.Router();
 router.post("/register",registercontroller);
 router.post("/login",logincontroller);
