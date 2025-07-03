@@ -52,7 +52,7 @@ const handlelogout=async(e)=>{
 });      
          if(res.data.success===true){
         dispatch(logout());
-    // localStorage.clear();
+    localStorage.clear();
               nav("/login");
          }
        
