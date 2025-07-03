@@ -11,7 +11,7 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, { 
     cors:{
-        origin : "http://localhost:3001", //process.env.FRONTEND_URL NOT working for some reason .see---> https://socket.io/docs/v4/handling-cors/
+        origin : "https://letschatt2.onrender.com", //process.env.FRONTEND_URL NOT working for some reason .see---> https://socket.io/docs/v4/handling-cors/
         credentials : true 
     }
  });
