@@ -41,20 +41,27 @@ const handlelogout=async(e)=>{
     e.preventDefault();
     try{
    
-        var Cookies = document.cookie.split(';');
- // set past expiry to all cookies
-for (var i = 0; i < Cookies.length; i++) {
-   document.cookie = Cookies[i] + "=; expires="+ new Date(0).toUTCString(); // source:- https://www.tutorialspoint.com/how-to-clear-all-cookies-with-javascript 
-}
+//         var Cookies = document.cookie.split(';');
+//  // set past expiry to all cookies
+// for (var i = 0; i < Cookies.length; i++) {
+//    document.cookie = Cookies[i] + "=; expires="+ new Date(0).toUTCString(); // source:- https://www.tutorialspoint.com/how-to-clear-all-cookies-with-javascript 
+// }
 // Cookies.remove('token');
-       
+     const res= await axios.get("http://localhost:3000/api/auth/logout", {
+  withCredentials: true
+});      
+         if(res.data.success===true){
         dispatch(logout());
     // localStorage.clear();
               nav("/login");
+         }
+       
+       else{
+        toast.error(res.data.message);
        }
-    
+    }
     catch(err){
-
+         toast.error(err.message);
     }
 }
 
