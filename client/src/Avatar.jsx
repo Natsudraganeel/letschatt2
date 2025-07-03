@@ -26,10 +26,10 @@ export default function Avatar({theuser}){
 }
 
     function openForm(){
-        if(!document.cookie){
-      toast.error("session expired.Relogin!");
+   //      if(!document.cookie){
+   //    toast.error("session expired.Relogin!");
    
-   return ; }
+   // return ; }
         setclick(!click);
          setjet(true);
     }
