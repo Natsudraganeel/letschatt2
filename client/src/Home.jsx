@@ -37,7 +37,7 @@ console.log(msg);
             //     var tok=localStorage.getItem('token');
             // const res=await axios.post( "https://letschatt2-backend.onrender.com/api/auth/user-details",{token:tok});
                var tok=document.cookie.substring(6);
-            const res=await axios.post( "http://localhost:3000/api/auth/user-details",{token:tok});
+            const res=await axios.post( "https://letschatt2-backend.onrender.com/api/auth/user-details",{token:tok});
             dispatch(setuser(res.data.data));
         console.log(res.data.data);
             if(res.data.data.logout===true){
@@ -65,7 +65,7 @@ console.log(msg);
          // var tok=localStorage.getItem('token');
          var tok=document.cookie.substring(6);
         console.log("tok=",tok);
-        const socketconnection=io("http://localhost:3000",{
+        const socketconnection=io("https://letschatt2-backend.onrender.com",{
           auth:{
             token:tok
           }
