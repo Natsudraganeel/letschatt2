@@ -43,7 +43,7 @@ export const registercontroller=async(req,res)=>{
            if(!match) {return res.send({success:false,message:'Invalid Password'})}
            else{
            //create token for authentication
-           const token= JWT.sign({id:user._id,email:user.email},process.env.JWT_SECRET,{expiresIn:'2m'});//signing the payload which contains _id of the user
+           const token= JWT.sign({id:user._id,email:user.email},process.env.JWT_SECRET,{expiresIn:'3h'});//signing the payload which contains _id of the user
            // didnot do await JWT as await has no effect on it
         //        res.send({
         //     success:true,
