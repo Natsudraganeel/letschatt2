@@ -36,7 +36,8 @@ console.log(msg);
             // })
             //     var tok=localStorage.getItem('token');
             // const res=await axios.post( "https://letschatt2-backend.onrender.com/api/auth/user-details",{token:tok});
-               var tok=document.cookie.substring(6);
+               var tok=document.cookie;
+               console.log("the user tok=",tok);
             const res=await axios.get( "https://letschatt2-backend.onrender.com/api/auth/user-details",{
               withCredentials:true
             });
