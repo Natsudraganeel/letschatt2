@@ -36,22 +36,33 @@ console.log(msg);
             // })
             //     var tok=localStorage.getItem('token');
             // const res=await axios.post( "https://letschatt2-backend.onrender.com/api/auth/user-details",{token:tok});
-               var tok=document.cookie;
-               console.log("the user tok=",tok);
+               // var tok=document.cookie;
+               // console.log("the user tok=",tok);
             const res=await axios.get( "https://letschatt2-backend.onrender.com/api/auth/user-details",{
               withCredentials:true
             });
             dispatch(setuser(res.data.data));
         console.log(res.data.data);
-            if(res.data.data.logout===true){
-              dispatch(logout());
-              for (var i = 0; i < Cookies.length; i++) {
-   document.cookie = Cookies[i] + "=; expires="+ new Date(0).toUTCString(); // source:- https://www.tutorialspoint.com/how-to-clear-all-cookies-with-javascript 
-}
+           if(res.data.data.logout===true){
+              // dispatch(logout());
+
+try{
+   const res= await axios.get("https://letschatt2-backend.onrender.com/api/auth/logout", {
+  withCredentials: true
+});      
+         if(res.data.success===true){
+        dispatch(logout());
+    // localStorage.clear();
               nav("/login");
-            }
-     
-            //console.log(res.data);
+         }
+       
+       else{
+        toast.error(res.data.message);
+       }
+    }
+    catch(err){
+         toast.error(err.message);
+    }
           
              }
              catch(err){
@@ -66,7 +77,8 @@ console.log(msg);
        useEffect(()=>{
         // var tok=Cookies.get('token');
          // var tok=localStorage.getItem('token');
-         var tok=document.cookie.substring(6);
+         // var tok=document.cookie.substring(6);
+         var tok=user.token;
         console.log("tok=",tok);
         const socketconnection=io("https://letschatt2-backend.onrender.com",{
           auth:{
