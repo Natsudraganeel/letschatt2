@@ -27,6 +27,7 @@ if(authres.code){
 
     dispatch(settoken(res.data.token));
     // document.cookie="token="+res.data.token+";sameSite=none;secure=true";
+     localStorage.setItem("token", res.data.token);
         nav("/");
    }
    else{
@@ -62,7 +63,7 @@ console.log(err.message)
           console.log(res.data.token);
           dispatch(settoken(res.data.token));
          
-          //  localStorage.setItem("token", res.data.token);
+           localStorage.setItem("token", res.data.token);
            //  document.cookie="token="+res.data.token+";sameSite=none;secure=true";
               nav("/");
          }
