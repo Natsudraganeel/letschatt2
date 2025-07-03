@@ -295,18 +295,18 @@ export const forgotcontroller=async(req,res)=>{
   }
   
   }
-export const DeleteAllMessagesController=async(req,res)=>{
-    try{
-     await MessageModel.deleteMany({});
-     res.send({
-        success:true,
-        message:"All Messages deleted"
-     })
-    }
-    catch(err){
-           res.send({
-        success:false,
-        message:err.message
-     })
-    }
-}
+// export const DeleteAllMessagesController=async(req,res)=>{
+//     try{
+//      await MessageModel.deleteMany({});
+//      res.send({
+//         success:true,
+//         message:"All Messages deleted"
+//      })
+//     }
+//     catch(err){
+//            res.send({
+//         success:false,
+//         message:err.message
+//      })
+//     }
+// }
