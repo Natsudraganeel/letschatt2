@@ -135,10 +135,19 @@ const closeform=()=>{
 
 const handlesubmit=async(e)=>{
    e.preventDefault();
-   if(!document.cookie){
-      toast.error("session expired.Relogin!");
-      return ;
-   }
+   // if(!document.cookie){
+   //    toast.error("session expired.Relogin!");
+   //    return ;
+   // }
+   try{
+   const res=await axios.get("https://letschatt2-backend.onrender.com/api/auth/user-details",{
+                 withCredentials:true
+               });
+               console.log(res.data);
+               if(res.data.data.success===false){
+                 return  toast.error("Session Expired.Relogin Please!")
+               }
+               else{
    const uploadedphoto=await upload(message.imageurl);
      
    
@@ -161,6 +170,12 @@ const handlesubmit=async(e)=>{
       imageurl : "",
       videourl : ""
     })
+   }
+
+}
+   }
+   catch(err){
+      toast.error(err.message);
    }
 
 }
