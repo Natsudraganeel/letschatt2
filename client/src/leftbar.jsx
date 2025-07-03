@@ -23,10 +23,10 @@ export default function Leftbar({setmsg,setfriend,sethide}){
 
 
     const handleopensearch=()=>{
-        if(!document.cookie){
-      toast.error("session expired.Relogin!");
+   //      if(!document.cookie){
+   //    toast.error("session expired.Relogin!");
    
-   return ; }
+   // return ; }
               setopensearch(!opensearch);
    }
    const handleclosesearch=(e)=>{
