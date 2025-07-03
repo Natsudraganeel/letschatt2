@@ -15,6 +15,6 @@ export const requiredsignin = async (req, res, next) => {
       if(error.name==="TokenExpiredError"){
         return res.send({succes:false,message:"Session Expired.Relogin!"});
       }
-      res.send({succes:false,message:error.message});
+     return res.send({succes:false,message:error.message});
     }
   };
