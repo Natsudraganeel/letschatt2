@@ -70,7 +70,7 @@ export const registercontroller=async(req,res)=>{
     }
         export const logoutcontroller = (req, res) => {
       try{
-  res.clearCookie("token");
+  res.clearCookie("token",{secure:true,sameSite:'None', httpOnly: false});
 
   res.send({ success: true, message: "Logged out successfully" });
       }
