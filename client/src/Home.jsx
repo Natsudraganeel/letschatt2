@@ -3,7 +3,7 @@ import axios from "axios"
 import Cookies from 'js-cookie';
 import { useDispatch,useSelector } from "react-redux"
 import toast, { Toaster } from 'react-hot-toast';
-import { setuser,logout,setonlineusers,setsocketConnection } from "./redux/userslice";
+import { setuser,logout,setonlineusers,setsocketConnection,settoken } from "./redux/userslice";
 import { useNavigate,useParams } from "react-router-dom";
 import Leftbar from "./leftbar";
 import DefaultMessage from "./defaultmessage"
@@ -43,7 +43,7 @@ console.log(msg);
               withCredentials:true
             });
             dispatch(setuser(res.data.data));
-        console.log(res.data.data);
+        // console.log(res.data.data);
            if(res.data.data.logout===true){
               // dispatch(logout());
 
@@ -53,7 +53,7 @@ try{
 });      
          if(res.data.success===true){
         dispatch(logout());
-    // localStorage.clear();
+    localStorage.clear();
               nav("/login");
          }
        
@@ -68,7 +68,7 @@ try{
              }
              }
              catch(err){
-                 console.log(err.message);
+                 toast.error(err.message);
              }
        }
        useEffect(()=>{
@@ -78,9 +78,10 @@ try{
 
        useEffect(()=>{
         // var tok=Cookies.get('token');
-         // var tok=localStorage.getItem('token');
+         var tok=localStorage.getItem('token');
+         dispatch(settoken(tok));
          // var tok=document.cookie.substring(6);
-         var tok=user.token;
+         // var tok=user.token;
         console.log("tok=",tok);
         const socketconnection=io("https://letschatt2-backend.onrender.com",{
           auth:{
