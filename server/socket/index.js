@@ -11,7 +11,7 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, { 
     cors:{
-        origin : "https://letschatt2.onrender.com", //process.env.FRONTEND_URL NOT working for some reason .see---> https://socket.io/docs/v4/handling-cors/
+        origin : "http://localhost:3001", //process.env.FRONTEND_URL NOT working for some reason .see---> https://socket.io/docs/v4/handling-cors/
         credentials : true 
     }
  });
@@ -49,15 +49,15 @@ console.log(online);
                 if(userid!=allusers[i].sender){
                 
                     ans.add(allusers[i].sender.toString());
-                    theusers.add({friend:allusers[i].sender.toString(),lastmsg:k[k.length-1][0]});
+                    theusers.add({friend:allusers[i].sender.toString(),lastmsg:k[k.length-1]});
                 }
                 if(userid!=allusers[i].receiver){
                     ans.add(allusers[i].receiver.toString());
-                    theusers.add({friend:allusers[i].receiver.toString(),lastmsg:k[k.length-1][0]});
+                    theusers.add({friend:allusers[i].receiver.toString(),lastmsg:k[k.length-1]});
                     }
             }
             const usersarr=Array.from(ans);
-            const conusers=await User.find({ _id: { $in: usersarr } });
+            const conusers=await User.find({ _id: { $in: usersarr } }).select("-password");
             const mixed=Array.from(theusers);
             conusers.sort((a,b)=>{return a._id.toString().localeCompare(b._id.toString())});// return dena imp.otherwise sort will not happen.also _id is object so to be converted to string
             mixed.sort((a,b)=>{return a.friend.localeCompare(b.friend)});
@@ -104,6 +104,7 @@ console.log(online);
         }
         const msg=await MessageModel({
             text:data?.text,
+            medianame:data?.medianame,
             imageurl:data?.imageurl,
             videourl:data?.videourl,
             msgByUserId :data?.msgByUserId

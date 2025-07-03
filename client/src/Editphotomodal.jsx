@@ -43,17 +43,15 @@ export default function EditPhotoModal({closeForm}){
     if( user.profile_pic===""){
       const updatedUser = { ...user, profile_pic: "abc" };
       dispatch(setuser(updatedUser));
-      const file = e.target.files[0];
-      console.log(file);
-      setphoto(file);
+    console.log("now the user:-",updatedUser);
+  
     }
-     else{
+    
     const file = e.target.files[0];
     console.log(file);
-    setphoto(file);
-     }
-     console.log(user);
-  }
+    setphoto(file);}
+     
+     
   const handleremovephoto=async()=>{
    setphoto("");
     const updatedUser = { ...user, profile_pic: "" };
@@ -83,11 +81,16 @@ x="abcd";
    console.log(uploadPhoto);
 }
 console.log("x="+x);
-const res=await axios.put("https://letschatt2-backend.onrender.com/api/auth/updateinfo",{
+const res=await axios.put("http://localhost:3000/api/auth/updateinfo",{
 id:user._id,
 name:name,
 profile_pic:x
-})
+},
+ {
+    headers: {
+      Authorization: user.token,
+    },
+  })
 if(res.data.success===true){
  console.log(res.data.updateduser);
  dispatch(setuser(res.data.updateduser));

@@ -3,7 +3,8 @@ import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Avatar from "./Avatar";
-export default function Search({handleclosesearch,setmsg,setfriend,jet,setjet,sethide}){
+import toast from "react-hot-toast";
+export default function Search({handleclosesearch,setmsg,setfriend,sethide}){
      
     const formdiv = {
         border: "2px solid black",
@@ -23,11 +24,19 @@ export default function Search({handleclosesearch,setmsg,setfriend,jet,setjet,se
       const handlesearch=async(e)=>{
         e.preventDefault();
         console.log("hello")
-        const res=await axios.get(`https://letschatt2-backend.onrender.com/api/auth/search/${user._id}/${keyword}`);
+        const res=await axios.get(`http://localhost:3000/api/auth/search/${user._id}/${keyword}`,
+          {
+    headers: {
+      Authorization: user.token,
+    },
+  }
+        );
         if(res.data.success===true){
             setsearch(res.data.users);
         }
-        
+        else{
+          toast.error(res.data.message);
+        }
       }
     return (
        
@@ -64,7 +73,7 @@ export default function Search({handleclosesearch,setmsg,setfriend,jet,setjet,se
                 <div onClick={()=>{sethide(true);setmsg(true);setfriend(s)}} className="w-full h-12 bg-slate-100 flex items-center hover:outline outline-blue-500 cursor-pointer ">
             <div className="ml-2">
             <div className="relative w-12 h-12 flex items-center justify-center  ">
-            <Avatar theuser={s} jet={jet} setjet={setjet}/>
+            <Avatar theuser={s} />
             
             </div>
             

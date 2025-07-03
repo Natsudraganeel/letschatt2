@@ -5,6 +5,8 @@ import JWT from "jsonwebtoken"
 import { google } from "googleapis";
 import { getuserdetails } from "../Helpers/Getuserdetails.js";
 import Conversation from "../Models/ConversationModel.js";
+import MessageModel from "../Models/MessageModel.js";
+
 export const registercontroller=async(req,res)=>{
     try{
       console.log(req.body);
@@ -41,19 +43,19 @@ export const registercontroller=async(req,res)=>{
            if(!match) {return res.send({success:false,message:'Invalid Password'})}
            else{
            //create token for authentication
-           const token= JWT.sign({id:user._id,email:user.email},process.env.JWT_SECRET,{expiresIn:'1d'});//signing the payload which contains _id of the user
+           const token= JWT.sign({id:user._id,email:user.email},process.env.JWT_SECRET,{expiresIn:'2m'});//signing the payload which contains _id of the user
            // didnot do await JWT as await has no effect on it
-               res.send({
+        //        res.send({
+        //     success:true,
+        //     message: 'login successful',
+        //  token:token});}
+        //  }
+           //if we define a maxage the browser deletes the cookie after that time automatically
+           res.cookie('token',token,{maxAge: 1000 * 60 * 180}).send({// .cookie i found in gfg cookie-parser article
             success:true,
             message: 'login successful',
          token:token});}
          }
-           
-         //   res.cookie('token',token,{sameSite:'none',secure:true}).send({// .cookie i found in gfg cookie-parser article
-         //    success:true,
-         //    message: 'login successful',
-         // token:token});}
-         // }
            // http:true -Ensures the cookie is only sent over HTTP(S) and not accessible via JavaScript
 // secure:true  // Ensures the cookie is only sent over HTTPS
            
@@ -100,7 +102,7 @@ export const googleauth=async(req,res)=>{
         "postmessage"
       );
        const tokenres = await oauth2Client.getToken(code)// from the code sent token is get
-        oauth2Client.setCredentials(tokenres.tokens);
+        // oauth2Client.setCredentials(tokenres.tokens);
     //    console.log(tokenres.tokens);
        const info=await axios.get(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${tokenres.tokens.access_token}`);// from the token we get info about the user that we mentioned in scopes in google cloud 
        //console.log(info);
@@ -111,18 +113,18 @@ else{
  
        
        //create token for authentication
-       let token= JWT.sign({id:user._id,email:user.email},process.env.JWT_SECRET,{expiresIn:'1d'});//signing the payload which contains _id of the user
+       let token= JWT.sign({id:user._id,email:user.email},process.env.JWT_SECRET,{expiresIn:'3h'});//signing the payload which contains _id of the user
        // didnot do await JWT as await has no effect on it
        
-       res.send({// .cookie i found in gfg cookie-parser article
-        success:true,
-        message: 'login successful',
-        token:token});
-     }
+     res.cookie('token',token,{maxAge: 1000 * 60 * 180}).send({// .cookie i found in gfg cookie-parser article
+            success:true,
+            message: 'login successful',
+         token:token});}
+         }
 
      
        
-    }
+    
     catch(err){
         res.send({
             success:false,
@@ -169,9 +171,9 @@ export const searchcontroller=async(req,res)=>{
   const {id,keyword}=req.params;
   try{
 const users=await User.find({_id:{$ne:id},
-    $or : [{name: {$regex:keyword,$options:"i"} }//regex means regular expression,searches according to the keyword ,$options:i says case insensitive
+    name: {$regex:keyword,$options:"i"} //regex means regular expression,searches according to the keyword ,$options:i says case insensitive
     
-    ]}).select("-password")
+    }).select("-password")
    // console.log(users)
     res.send({
         success:true,
@@ -240,6 +242,22 @@ catch(err){
 //         })
 //     }
 // }
+
+ export const emailcheck=async(req,res)=>{
+ const {email}=req.body;
+  let user= await User.findOne({email:email});  // i forgot to write await here.The problem i faced was that the user was not found.
+  console.log(user.name);
+  if(!user){
+    return res.send({success:false,message:"You are not registered"});
+  }
+  res.send({
+    success:true,
+    message:"You are registered"
+  })
+ }
+
+
+
 export const forgotcontroller=async(req,res)=>{
     try{
       
@@ -252,13 +270,12 @@ export const forgotcontroller=async(req,res)=>{
     
     else{
       //create token for authentication
-      const token= JWT.sign({id:user._id,email:user.email},process.env.JWT_SECRET,{expiresIn:'1d'});
-      res.send({
-       success:true,
-       message: 'successful',
-       token:token,
-      user}
-    );}
+      const token= JWT.sign({id:user._id,email:user.email},process.env.JWT_SECRET,{expiresIn:'3h'});
+     res.cookie('token',token,{maxAge: 1000 * 60 * 180}).send({// .cookie i found in gfg cookie-parser article
+            success:true,
+            message: 'login successful',
+         token:token});}
+         
   }
   catch(err){
     res.send({
@@ -268,3 +285,18 @@ export const forgotcontroller=async(req,res)=>{
   }
   
   }
+export const DeleteAllMessagesController=async(req,res)=>{
+    try{
+     await MessageModel.deleteMany({});
+     res.send({
+        success:true,
+        message:"All Messages deleted"
+     })
+    }
+    catch(err){
+           res.send({
+        success:false,
+        message:err.message
+     })
+    }
+}

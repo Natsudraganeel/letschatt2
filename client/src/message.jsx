@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import toast, { Toaster } from 'react-hot-toast';
 import { IoAddCircle } from "react-icons/io5";
 import { FaImage } from "react-icons/fa6";
 import { MdFileDownload } from "react-icons/md";
@@ -35,14 +36,22 @@ const [add,setadd]=useState(false);
 
 const [message,setmessage]=useState({
    text:"",
+   medianame:"",
    imageurl:"",
    videourl:""
 })
 const handleallmessages=async()=>{
    try{
-   const res=await axios.get(`https://letschatt2-backend.onrender.com/api/auth/conversation/${user._id}/${friend._id}`);
+   const res=await axios.get(`http://localhost:3000/api/auth/conversation/${user._id}/${friend._id}`, {
+    headers: {
+      Authorization: user.token,
+    },
+  });
    if(res.data.success===true){
       setallmessage(res.data.converse);
+   }
+   else{
+      toast.error(res.data.message);
    }
    }
    catch(err){
@@ -74,11 +83,13 @@ useEffect(()=>{
 // },[socketConnection])
 
 const handleimage=(e)=>{
+   
    console.log("hello")
-   console.log(e.target.files[0]);
+   console.log("the image",e.target.files[0]);
 setmessage((pre)=>{
    return {
       ...pre,
+      medianame:e.target.files[0].name,
       imageurl:e.target.files[0]
    }
 })
@@ -96,11 +107,13 @@ const handletext=(e)=>{
    })
 }
 const handlevideo=(e)=>{
+    
    console.log("hello")
    console.log(e.target.files[0]);
 setmessage((pre)=>{
    return {
       ...pre,
+       medianame:e.target.files[0].name,
       videourl:e.target.files[0]
    }
 })
@@ -112,6 +125,7 @@ const closeform=()=>{
       return {
          ...pre,
          text:"",
+         medianame:"",
          imageurl:"",
          videourl:"",
       }
@@ -121,6 +135,10 @@ const closeform=()=>{
 
 const handlesubmit=async(e)=>{
    e.preventDefault();
+   if(!document.cookie){
+      toast.error("session expired.Relogin!");
+      return ;
+   }
    const uploadedphoto=await upload(message.imageurl);
      
    
@@ -132,6 +150,7 @@ const handlesubmit=async(e)=>{
          sender : user?._id,
          receiver : friend._id,
          text : message?.text,
+         medianame:message?.medianame,
          imageurl : uploadedphoto?.url,
          videourl : uploadedvideo?.url,
          msgByUserId : user?._id
@@ -201,31 +220,31 @@ const handlesubmit=async(e)=>{
                         return (
 
 
-                        <div className={`  p-2 m-1 rounded-lg max-w-[280px] w-fit ${msg[0].msgByUserId=== user._id ? "bg-yellow-200 justify-self-end self-center" :"bg-white self-center" }`}>
-                       {msg[0].imageurl && 
+                        <div className={`  p-2 m-1 rounded-lg max-w-[280px] w-fit ${msg.msgByUserId=== user._id ? "bg-yellow-200 justify-self-end self-center" :"bg-white self-center" }`}>
+                       {msg.imageurl && 
                        (<div>
-                        <div className="flex justify-end " onClick={() => {handleDownload(msg[0].imageurl, 'test-download.jpg')
+                        <div className="flex justify-end " onClick={() => {handleDownload(msg.imageurl, msg.medianame)
 }}>
                          <MdFileDownload size={20} className=" hover:bg-slate-400 "/>
                          </div>
-                        <a href={msg[0].imageurl} target="_blank"  ><img className="object-scale-down " src={msg[0]?.imageurl}  /></a>
+                        <a href={msg.imageurl} target="_blank"  ><img className="object-scale-down " src={msg?.imageurl}  /></a>
                          
 
                        </div>)
 
                        }
                        {
-                        msg[0].videourl && 
+                        msg.videourl && 
                        (<div>
-                        <div className="flex justify-end " onClick={() => {handleDownload(msg[0].videourl, 'test-download3.mp4')
+                        <div className="flex justify-end " onClick={() => {handleDownload(msg.videourl, msg.medianame)
 }}>
                          <MdFileDownload size={25} className=" hover:bg-slate-400 "/>
                          </div>
-                        <a href={msg[0].videourl} target="_blank" ><video className="object-scale-down" src={msg[0]?.videourl} controls/>
+                        <a href={msg.videourl} target="_blank" ><video className="object-scale-down" src={msg?.videourl} controls/>
                         </a></div>)
                        }
-                       {<div className="text-wrap">{msg[0].text}</div> /*why? As allmessage is an array of arrays of size 1 and each of thos array consist of a message objcet*/ }
-                     <div className="flex justify-end"><p className="text-xs">{moment(msg[0].createdAt).format('D/M/YY,hh:mm a')}</p></div>
+                       {<div className="text-wrap">{msg.text}</div> /*why? As allmessage is an array of arrays of size 1 and each of thos array consist of a message objcet*/ }
+                     <div className="flex justify-end"><p className="text-xs">{moment(msg.createdAt).format('D/M/YY,hh:mm a')}</p></div>
                        </div>)
                      })}
                     
@@ -295,7 +314,7 @@ const handlesubmit=async(e)=>{
                      </form>
                      }
                     </div>
-                     
+                       <Toaster />
                      
                 </div>
             )

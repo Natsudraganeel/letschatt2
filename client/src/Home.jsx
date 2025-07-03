@@ -15,7 +15,7 @@ export default function Home(){
   const [click,setclick]=useState(false);
   const [allmessage,setallmessage]=useState([]);
   const [msg,setmsg]=useState(false);
-  const [jet,setjet]=useState(false);
+  // const [jet,setjet]=useState(false);
 const [hide,sethide]=useState(false);
   const [friend,setfriend]=useState();
        const user = useSelector(state => state.user);
@@ -37,12 +37,14 @@ console.log(msg);
             //     var tok=localStorage.getItem('token');
             // const res=await axios.post( "https://letschatt2-backend.onrender.com/api/auth/user-details",{token:tok});
                var tok=document.cookie.substring(6);
-            const res=await axios.post( "https://letschatt2-backend.onrender.com/api/auth/user-details",{token:tok});
+            const res=await axios.post( "http://localhost:3000/api/auth/user-details",{token:tok});
             dispatch(setuser(res.data.data));
         console.log(res.data.data);
             if(res.data.data.logout===true){
               dispatch(logout());
-       
+              for (var i = 0; i < Cookies.length; i++) {
+   document.cookie = Cookies[i] + "=; expires="+ new Date(0).toUTCString(); // source:- https://www.tutorialspoint.com/how-to-clear-all-cookies-with-javascript 
+}
               nav("/login");
             }
      
@@ -63,7 +65,7 @@ console.log(msg);
          // var tok=localStorage.getItem('token');
          var tok=document.cookie.substring(6);
         console.log("tok=",tok);
-        const socketconnection=io("https://letschatt2-backend.onrender.com",{
+        const socketconnection=io("http://localhost:3000",{
           auth:{
             token:tok
           }
@@ -86,7 +88,7 @@ console.log(msg);
         {user.email!="" ? 
         (
           <div className="flex ">
-          <Leftbar click={click}  setmsg={setmsg} setclick={setclick} setfriend={setfriend} jet={jet} setjet={setjet} sethide={sethide}/>
+          <Leftbar click={click}  setmsg={setmsg} setclick={setclick} setfriend={setfriend}  sethide={sethide}/>
           <Contacts  setmsg={setmsg} setfriend={setfriend} hide={hide} sethide={sethide} allmessage={allmessage}/>
           {
             msg===true ?

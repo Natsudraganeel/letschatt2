@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from 'axios'
 import Cookies from 'js-cookie';
 import { AiFillMessage } from "react-icons/ai";
+import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
 import { logout } from "./redux/userslice";
 import { IoPersonAddSharp } from "react-icons/io5";
@@ -9,19 +10,23 @@ import { BiSolidLogOut } from "react-icons/bi";
 import { useDispatch,useSelector } from "react-redux"
 import Search from "./searchuser";
 import Avatar from "./Avatar";
-export default function Leftbar({setmsg,setfriend,jet,setjet,sethide}){
+export default function Leftbar({setmsg,setfriend,sethide}){
    const clone={
     width:"70px",
     height:"100vh"
    }
    const user = useSelector(state => state.user);
    const [opensearch,setopensearch]=useState(false);
-   const [av,setav]=useState(true);
+   
    const dispatch=useDispatch();
    const nav=useNavigate()
 
 
     const handleopensearch=()=>{
+        if(!document.cookie){
+      toast.error("session expired.Relogin!");
+   
+   return ; }
               setopensearch(!opensearch);
    }
    const handleclosesearch=(e)=>{
@@ -44,7 +49,7 @@ for (var i = 0; i < Cookies.length; i++) {
 // Cookies.remove('token');
        
         dispatch(logout());
-    localStorage.clear();
+    // localStorage.clear();
               nav("/login");
        }
     
@@ -65,16 +70,17 @@ for (var i = 0; i < Cookies.length; i++) {
          <div className="w-12 h-12 flex items-center justify-center hover:bg-slate-400 " onClick={handleopensearch} >
          <IoPersonAddSharp size={25} />
          </div>
-         {opensearch && <Search handleclosesearch={handleclosesearch} setmsg={setmsg} setfriend={setfriend}  setjet={setav} sethide={sethide}/>}
+         {opensearch && <Search handleclosesearch={handleclosesearch} setmsg={setmsg} setfriend={setfriend}   sethide={sethide}/>}
          </div>
          <div>
          <div className="relative w-12 h-12 flex items-center justify-center hover:bg-slate-400 ">
-         <Avatar theuser={user} jet={jet} setjet={setjet}/>
+         <Avatar theuser={user} />
          </div>
          <div onClick={handlelogout} className="w-12 h-12 flex items-center justify-center hover:bg-slate-400 ">
          <BiSolidLogOut size={20} />
          </div>
          </div>
+            <Toaster />
         </div>
     )
 }

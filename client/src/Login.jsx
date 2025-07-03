@@ -18,14 +18,15 @@ try{
 if(authres.code){
   const res=await axios({
     method:"get",
-    url:`https://letschatt2-backend.onrender.com/api/auth/google?code=${authres.code}`,
+    url:`http://localhost:3000/api/auth/google?code=${authres.code}`,
     withCredentials:true
   });// withCredentials:true na korle browser e application e cookies  sectione store hobe na/By default withCredentials:false
   console.log(res.data);
   if(res.data.success===true){
     console.log("res.data.token",res.data.token);
+
     dispatch(settoken(res.data.token));
-    document.cookie="token="+res.data.token+";sameSite=none;secure=true";
+    // document.cookie="token="+res.data.token+";sameSite=none;secure=true";
         nav("/");
    }
    else{
@@ -42,12 +43,15 @@ console.log(err.message)
     onError:responseGoogle,
     flow: 'auth-code',
   });
+
+
+
   const handlesubmit=async(e)=>{
     e.preventDefault();
     try{
          const res=await axios({
           method:"post",
-          url:"https://letschatt2-backend.onrender.com/api/auth/login",
+          url:"http://localhost:3000/api/auth/login",
           data:{
             email,
             password
@@ -57,8 +61,9 @@ console.log(err.message)
          if(res.data.success===true){
           console.log(res.data.token);
           dispatch(settoken(res.data.token));
-           document.cookie="token="+res.data.token+";sameSite=none;secure=true";
-           localStorage.setItem("token", res.data.token);
+         
+          //  localStorage.setItem("token", res.data.token);
+           //  document.cookie="token="+res.data.token+";sameSite=none;secure=true";
               nav("/");
          }
          else{

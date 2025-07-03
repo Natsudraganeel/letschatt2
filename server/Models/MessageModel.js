@@ -14,9 +14,9 @@ const Messageschema=new  mongoose.Schema({
     type:String,
     default:""
   },
-  seen:{
-    type:Boolean,
-    default:false
+  medianame:{
+    type:String,
+    default:""
   },
   msgByUserId:{
     type:mongoose.Schema.ObjectId,

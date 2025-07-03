@@ -12,13 +12,13 @@ const Conversationschema=new  mongoose.Schema({
     required:true,
     ref:"User"
   },
-  message:[
-    {
-        type:Array,
+  message:{
+    
+        type:[],
         
         default:[]
-    }
-  ]
+    
+  }
 
 },{
     timestamps:true ,// created time will be added

@@ -22,7 +22,7 @@ export default function Forgotpassword(){
             event.preventDefault();
     console.log(email);
             try{
-              const res=await axios.post("https://letschatt2-backend.onrender.com/api/auth/forgotpassword",{
+               const res=await axios.post("http://localhost:3000/api/auth/emailcheck",{
                 email
               })
               console.log(res.data);
@@ -98,6 +98,7 @@ export default function Forgotpassword(){
       inputRefs.current[index - 1]
     ) {
       // Move focus to the previous input field on backspace
+  
       inputRefs.current[index - 1].focus();
     }
   }
@@ -107,7 +108,7 @@ export default function Forgotpassword(){
             try{
             const res=await axios({
                 method:"post",
-                url:"https://letschatt2-backend.onrender.com/api/auth/forgotpassword",
+                url:"http://localhost:3000/api/auth/forgotpassword",
                 data:{
                   email,
                   
@@ -121,7 +122,7 @@ export default function Forgotpassword(){
                
                 console.log(typeof(res.data.token));
                   // localStorage.setItem("token",res.data.token);
-                document.cookie="token="+res.data.token;
+                // document.cookie="token="+res.data.token;
                 dispatch(settoken(res.data.token));
                 //alert("success");
                 nav("/");
