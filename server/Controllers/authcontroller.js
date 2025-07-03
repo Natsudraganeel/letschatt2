@@ -68,7 +68,16 @@ export const registercontroller=async(req,res)=>{
        }
    
     }
-    
+        export const logoutcontroller = (req, res) => {
+      try{
+  res.clearCookie("token");
+
+  res.send({ success: true, message: "Logged out successfully" });
+      }
+      catch(err){
+        res.send({ success: false,message:err.message });
+      }
+};
     
 export const userdetails=async (req,res)=>{
     try{
