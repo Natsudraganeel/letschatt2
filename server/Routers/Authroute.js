@@ -1,10 +1,11 @@
 import express from "express"
 import { requiredsignin } from "../Middlewares/authmiddleware.js";
 import {registercontroller,logincontroller,userdetails,googleauth,updateinfocontroller,searchcontroller,conversationcontroller,
-    forgotcontroller,emailcheck,DeleteAllMessagesController} from "../Controllers/authcontroller.js"
+    forgotcontroller,emailcheck,DeleteAllMessagesController,logoutcontroller} from "../Controllers/authcontroller.js"
 const router=express.Router();
 router.post("/register",registercontroller);
 router.post("/login",logincontroller);
+router.get("/logout",logoutcontroller);
 router.get("/user-details",userdetails);
 router.get("/google",googleauth);
 router.put("/updateinfo",requiredsignin,updateinfocontroller);
