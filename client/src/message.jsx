@@ -248,7 +248,12 @@ const handleaimedia=async(msgai)=>{
    }
       else{
           try{
-         const res=await axios.post("https://letschatt2-backend.onrender.com/api/genai/describevideo",{content:msgai.videourl});
+         const res=await axios.post("https://letschatt2-backend.onrender.com/api/genai/describevideo",{content:msgai.videourl},
+   {            
+    headers: {
+      Authorization: user.token,
+    },
+  });
          if(res.data.success===true){
               setloading("");
             setmsggenai(res.data.message);
