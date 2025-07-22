@@ -22,7 +22,7 @@ export default function Forgotpassword(){
             event.preventDefault();
     console.log(email);
             try{
-               const res=await axios.post("https://letschatt2-backend.onrender.com/api/auth/emailcheck",{
+               const res=await axios.post("http://localhost:3000/api/auth/emailcheck",{
                 email
               })
               console.log(res.data);
@@ -43,7 +43,7 @@ export default function Forgotpassword(){
                   Username : process.env.REACT_APP_USERNAME,
                   Password : process.env.REACT_APP_SMTP_PASSWORD,
                   Host : process.env.REACT_APP_SMTP_HOST,
-                  Port:2525,
+                  Port:process.env.REACT_APP_PORT,
                   To : email,
                   From : process.env.REACT_APP_MY_EMAIL,
                   Subject : "OTP for login purpose",
@@ -108,7 +108,7 @@ export default function Forgotpassword(){
             try{
             const res=await axios({
                 method:"post",
-                url:"https://letschatt2-backend.onrender.com/api/auth/forgotpassword",
+                url:"http://localhost:3000/api/auth/forgotpassword",
                 data:{
                   email,
                   

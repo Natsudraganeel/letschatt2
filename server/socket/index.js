@@ -11,7 +11,7 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, { 
     cors:{
-        origin : "https://letschatt2.onrender.com", //process.env.FRONTEND_URL NOT working for some reason .see---> https://socket.io/docs/v4/handling-cors/
+        origin : "http://localhost:3001", //process.env.FRONTEND_URL NOT working for some reason .see---> https://socket.io/docs/v4/handling-cors/
         credentials : true 
     }
  });
@@ -24,10 +24,10 @@ io.on("connection", async(socket) => {
     socket.join(user?._id?.toString());// adds all the users in the socket   // if we dont toString() isonline will be shown false.why?as userid is string and user._id is integer. .has() wont work unless 
     online.add(user?._id?.toString());       // array of users in socket
     io.emit("online",Array.from(online));
-console.log(online);
+// console.log(online);
     socket.on("messagepage",async(userid)=>{
         console.log("userid",typeof(userid));//type of userid sent is string
-        console.log(online);
+        // console.log(online);
         const userdetails=await User.findById(userid).select("-password");
         socket.emit("messageuser",{
             _id:userdetails?._id,
@@ -61,8 +61,8 @@ console.log(online);
             const mixed=Array.from(theusers);
             conusers.sort((a,b)=>{return a._id.toString().localeCompare(b._id.toString())});// return dena imp.otherwise sort will not happen.also _id is object so to be converted to string
             mixed.sort((a,b)=>{return a.friend.localeCompare(b.friend)});
-            console.log("consusers",conusers);
-            console.log("mixed",mixed);
+            // console.log("consusers",conusers);
+            // console.log("mixed",mixed);
             const realans=[];
             let i=0;
             let j=0;
@@ -88,7 +88,7 @@ console.log(online);
     })
 
     socket.on("new message",async(data)=>{
-        console.log(data);
+        // console.log(data);
         let conversation=await Conversation.findOne({
             "$or":[
                 {sender:data?.sender,receiver:data?.receiver},

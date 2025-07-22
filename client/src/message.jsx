@@ -3,6 +3,9 @@ import { useSelector } from "react-redux";
 import toast, { Toaster } from 'react-hot-toast';
 import { IoAddCircle } from "react-icons/io5";
 import { FaImage } from "react-icons/fa6";
+import { ImCross } from "react-icons/im";
+import { PiTranslate } from "react-icons/pi";
+import { SiGooglegemini } from "react-icons/si";
 import { MdFileDownload } from "react-icons/md";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import { IoVideocam } from "react-icons/io5";
@@ -33,16 +36,20 @@ export default function Message({friend,sethide,hide,setmsg,allmessage,setallmes
 const socketConnection=useSelector(state=>state?.user?.socketConnection);
 const [muser,setmuser]=useState({});
 const [add,setadd]=useState(false);
-
+const [msggenai,setmsggenai]=useState("");
+const [translatepage,settranslatepage]=useState(false);
+const [describepage,setdescribepage]=useState(false);
+const [loading,setloading]=useState("");
 const [message,setmessage]=useState({
    text:"",
    medianame:"",
    imageurl:"",
    videourl:""
 })
+
 const handleallmessages=async()=>{
    try{
-   const res=await axios.get(`https://letschatt2-backend.onrender.com/api/auth/conversation/${user._id}/${friend._id}`, {
+   const res=await axios.get(`http://localhost:3000/api/auth/conversation/${user._id}/${friend._id}`, {
     headers: {
       Authorization: user.token,
     },
@@ -140,7 +147,7 @@ const handlesubmit=async(e)=>{
    //    return ;
    // }
    try{
-   const res=await axios.get("https://letschatt2-backend.onrender.com/api/auth/user-details",{
+   const res=await axios.get("http://localhost:3000/api/auth/user-details",{
                  withCredentials:true
                });
                console.log(res.data);
@@ -173,12 +180,121 @@ const handlesubmit=async(e)=>{
    }
 
 }
+
    }
    catch(err){
       toast.error(err.message);
    }
 
 }
+//handle translation only///////////////////////////////////////////////////////////////////////////////
+const handletranslate=async(msgai)=>{
+   try{
+      // setmsggenai(msgai);
+      if(!msgai.text){
+        return  toast.error("No content to show ");
+      }
+      settranslatepage(true);
+      setloading("Loading....");
+       const res=await axios.post("http://localhost:3000/api/genai/translate",{content:msgai});
+       console.log(res.data);
+       if(res.data.success===true){
+         // setmsggenai(res.data.message);
+         setloading("");
+         setmsggenai(res.data.message);
+         console.log(res.data.message);
+       }
+       else{
+       
+           
+         toast.error("Gemini not responding!!")
+  
+                   
+}
+   }
+   catch(err){
+        toast.error("Client side error")
+   }
+}
+
+const handleaimedia=async(msgai)=>{
+   setdescribepage(true);
+     setloading("Loading....");
+      if(msgai.imageurl){
+         try{
+         const res=await axios.post("http://localhost:3000/api/genai/describeimage",{content:msgai.imageurl});
+         if(res.data.success===true){
+              setloading("");
+            setmsggenai(res.data.message);
+         }
+         else{
+           toast.error(res.data.message)
+         }
+      }
+      catch(err){
+         toast.error("Client side error")
+      }
+   }
+      else{
+          try{
+         const res=await axios.post("http://localhost:3000/api/genai/describevideo",{content:msgai.videourl});
+         if(res.data.success===true){
+              setloading("");
+            setmsggenai(res.data.message);
+         }
+         else{
+           toast.error(res.data.message)
+         }
+      }
+      catch(err){
+         toast.error("Client side error")
+      }
+      }
+   // setmsggenai("hello")
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function handleai(){
+   settranslatepage(false);
+   setdescribepage(false);
+   setloading("");
+   setmsggenai("");
+}
+function handledate(msgtime){
+   let currtime=new Date();
+   let thistime=new Date(msgtime);
+   console.log(msgtime);
+   console.log(thistime);
+   let time=currtime.getTime()-thistime.getTime();
+   console.log(time);
+   if(time<2*60*1000){// less than 2mis then show a min ago or a few a sec ago
+      return moment(msgtime).fromNow();
+   }
+   // if(time>=24*60*60*1000){
+   
+   //    return moment(msgtime).format('D/M/YY,HH:mm')
+   // }
+      if(moment(currtime).format('D/MM/YY')!=moment(thistime).format('D/MM/YY')){
+      return moment(msgtime).format('D/M/YY,HH:mm')
+   }
+   return moment(msgtime).format('HH:mm');
+}
+
+
+
 
 
         useEffect(()=>{
@@ -199,6 +315,53 @@ const handlesubmit=async(e)=>{
         
             return (
                 <div className={hide==false ? "w-full bg-slate-300 grid hidden" : "w-full bg-slate-300 grid" }>
+                {
+                  (translatepage===true) && (
+                   <div  className="fixed z-20 inset-0 flex items-center justify-center " >
+                   
+                   <div className="max-w-xs min-w-[300px]  bg-slate-100 rounded-lg h-96 ">
+                   <div className="mr-4 mt-4 flex justify-end" onClick={handleai}><ImCross /></div>
+                   <div>
+                   <h1 className="ml-4 font-sans font-black">This translates to:-</h1>
+                     </div>
+                     <div className="h-92 grid overflow-y-scroll ">
+                     <p className="ml-4 text-red-700">{loading}</p>
+                    <div className="ml-4 self-center mr-2">
+                         <div className="text-wrap">
+                              {msggenai}
+                          </div>
+                      </div>
+                      </div>
+                     </div>
+                     </div>
+                    
+                  )
+                }
+
+                   {
+                  (describepage===true) && (
+                   <div  className="fixed z-20 inset-0 flex items-center justify-center " >
+                   
+                   <div className="max-w-xs min-w-[300px]  bg-slate-100 rounded-lg h-96 ">
+                   <div className="mr-4 mt-4 flex justify-end" onClick={handleai}><ImCross /></div>
+                   <div>
+                   <h1 className="ml-4 font-sans font-black">The description is:-</h1>
+                     </div>
+                     <div className="h-80 grid overflow-y-scroll ">
+                     <p className="ml-4 text-red-700">{loading}</p>
+                    <div className="ml-4 self-center mr-2">
+                         <div className="text-wrap">
+                              {msggenai}
+                          </div>
+                      </div>
+                      </div>
+                     </div>
+                     </div>
+                    
+                  )
+                }
+
+
                      <div className="w-full h-20 bg-slate-100 flex items-center justify-between">
                      <div className="flex items-center">
                      <div className="relative">
@@ -236,11 +399,22 @@ const handlesubmit=async(e)=>{
 
 
                         <div className={`  p-2 m-1 rounded-lg max-w-[280px] w-fit ${msg.msgByUserId=== user._id ? "bg-yellow-200 justify-self-end self-center" :"bg-white self-center" }`}>
+                         
                        {msg.imageurl && 
                        (<div>
-                        <div className="flex justify-end " onClick={() => {handleDownload(msg.imageurl, msg.medianame)
-}}>
+                       <div className="flex justify-between">
+                       <div className="flex">
+                       <div >
+                         <PiTranslate  className=" hover:bg-slate-400 " onClick={()=>{handletranslate(msg)}}/>
+                         </div>
+                        <div className="px-2"  onClick={()=>{handleaimedia(msg)}}>
+                         <SiGooglegemini  className=" hover:bg-slate-400 " />
+                         </div>
+                         </div>
+                        <div  onClick={() => {handleDownload(msg.imageurl, msg.medianame)}}>
                          <MdFileDownload size={20} className=" hover:bg-slate-400 "/>
+                         </div>
+                        
                          </div>
                         <a href={msg.imageurl} target="_blank"  ><img className="object-scale-down " src={msg?.imageurl}  /></a>
                          
@@ -251,15 +425,30 @@ const handlesubmit=async(e)=>{
                        {
                         msg.videourl && 
                        (<div>
-                        <div className="flex justify-end " onClick={() => {handleDownload(msg.videourl, msg.medianame)
-}}>
-                         <MdFileDownload size={25} className=" hover:bg-slate-400 "/>
+                       <div className="flex justify-between">
+                       <div className="flex">
+                       <div >
+                         <PiTranslate  className=" hover:bg-slate-400 " onClick={()=>{handletranslate(msg)}}/>
+                         </div>
+                        <div className="px-2" onClick={()=>{handleaimedia(msg)}}>
+                         <SiGooglegemini  className=" hover:bg-slate-400 " />
+                         </div>
+                         </div>
+                        <div  onClick={() => {handleDownload(msg.videourl, msg.medianame)}}>
+                         <MdFileDownload size={20} className=" hover:bg-slate-400 "/>
+                         </div>
+                        
                          </div>
                         <a href={msg.videourl} target="_blank" ><video className="object-scale-down" src={msg?.videourl} controls/>
                         </a></div>)
                        }
+                       {!msg.imageurl && !msg.videourl && (
+                        <div >
+                         <PiTranslate  className=" hover:bg-slate-400 " onClick={()=>{handletranslate(msg)}}/>
+                         </div>
+                       )}
                        {<div className="text-wrap">{msg.text}</div> /*why? As allmessage is an array of arrays of size 1 and each of thos array consist of a message objcet*/ }
-                     <div className="flex justify-end"><p className="text-xs">{moment(msg.createdAt).format('D/M/YY,hh:mm a')}</p></div>
+                     <div className="flex justify-end"><p className="text-xs">{handledate(msg.createdAt)}</p></div>
                        </div>)
                      })}
                     
@@ -321,7 +510,7 @@ const handlesubmit=async(e)=>{
                      <button onClick={()=>{setadd(!add)}} className="w-50 h-50  ">
                      <IoAddCircle size={45}/>
                      </button>
-                     <input onChange={handletext} type="text" placeholder="Type here ...." className="pl-2   bg-slate-100  rounded-2xl w-11/12 h-10 "/>
+                     <input onChange={handletext} type="text" placeholder="Type here ...." className="pl-2 pr-2  bg-slate-100  rounded-2xl w-11/12 h-10 "/>
                      <button type="submit"  className=" w-50 h-50 p-2 rounded-full hover:bg-slate-400">
                      <RiSendPlaneFill size={35}/>
                      </button>

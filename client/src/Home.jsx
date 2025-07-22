@@ -20,7 +20,7 @@ export default function Home(){
 const [hide,sethide]=useState(false);
   const [friend,setfriend]=useState();
        const user = useSelector(state => state.user);
-       
+       const [aipage,setaipage]=useState(false);
       
   useEffect(()=>{
 console.log(msg);
@@ -39,7 +39,7 @@ console.log(msg);
             // const res=await axios.post( "https://letschatt2-backend.onrender.com/api/auth/user-details",{token:tok});
                // var tok=document.cookie;
                // console.log("the user tok=",tok);
-            const res=await axios.get( "https://letschatt2-backend.onrender.com/api/auth/user-details",{
+            const res=await axios.get( "http://localhost:3000/api/auth/user-details",{
               withCredentials:true
             });
             dispatch(setuser(res.data.data));
@@ -48,7 +48,7 @@ console.log(msg);
               // dispatch(logout());
 
 try{
-   const res= await axios.get("https://letschatt2-backend.onrender.com/api/auth/logout", {
+   const res= await axios.get("http://localhost:3000/api/auth/logout", {
   withCredentials: true
 });      
          if(res.data.success===true){
@@ -83,7 +83,7 @@ try{
          // var tok=document.cookie.substring(6);
          // var tok=user.token;
         console.log("tok=",tok);
-        const socketconnection=io("https://letschatt2-backend.onrender.com",{
+        const socketconnection=io("http://localhost:3000",{
           auth:{
             token:tok
           }

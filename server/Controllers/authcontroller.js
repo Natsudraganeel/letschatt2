@@ -7,6 +7,7 @@ import { getuserdetails } from "../Helpers/Getuserdetails.js";
 import Conversation from "../Models/ConversationModel.js";
 import MessageModel from "../Models/MessageModel.js";
 
+
 export const registercontroller=async(req,res)=>{
     try{
       console.log(req.body);
@@ -56,7 +57,7 @@ export const registercontroller=async(req,res)=>{
             message: 'login successful',
          token:token});}
          }
-           // http:true -Ensures the cookie is only sent over HTTP(S) and not accessible via JavaScript
+           // httpOnly:true -Ensures the cookie is only sent over HTTP(S) and not accessible via JavaScript
 // secure:true  // Ensures the cookie is only sent over HTTPS
            
         }
@@ -310,3 +311,6 @@ export const forgotcontroller=async(req,res)=>{
 //      })
 //     }
 // }
+export const generatetranslation=async(req,res)=>{
+
+}
