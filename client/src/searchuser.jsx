@@ -24,7 +24,7 @@ export default function Search({handleclosesearch,setmsg,setfriend,sethide}){
       const handlesearch=async(e)=>{
         e.preventDefault();
         console.log("hello")
-        const res=await axios.get(`http://localhost:3000/api/auth/search/${user._id}/${keyword}`,
+        const res=await axios.get(`https://letschatt2-backend.onrender.com/api/auth/search/${user._id}/${keyword}`,
           {
     headers: {
       Authorization: user.token,
