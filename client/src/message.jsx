@@ -49,7 +49,7 @@ const [message,setmessage]=useState({
 
 const handleallmessages=async()=>{
    try{
-   const res=await axios.get(`http://localhost:3000/api/auth/conversation/${user._id}/${friend._id}`, {
+   const res=await axios.get(`https://letschatt2-backend.onrender.com/api/auth/conversation/${user._id}/${friend._id}`, {
     headers: {
       Authorization: user.token,
     },
@@ -147,7 +147,7 @@ const handlesubmit=async(e)=>{
    //    return ;
    // }
    try{
-   const res=await axios.get("http://localhost:3000/api/auth/user-details",{
+   const res=await axios.get("https://letschatt2-backend.onrender.com/api/auth/user-details",{
                  withCredentials:true
                });
                console.log(res.data);
@@ -196,7 +196,7 @@ const handletranslate=async(msgai)=>{
       }
       settranslatepage(true);
       setloading("Loading....");
-       const res=await axios.post("http://localhost:3000/api/genai/translate",{content:msgai},
+       const res=await axios.post("https://letschatt2-backend.onrender.com/api/genai/translate",{content:msgai},
          {
     headers: {
       Authorization: user.token,
@@ -227,7 +227,7 @@ const handleaimedia=async(msgai)=>{
      setloading("Loading....");
       if(msgai.imageurl){
          try{
-         const res=await axios.post("http://localhost:3000/api/genai/describeimage",{content:msgai.imageurl},
+         const res=await axios.post("https://letschatt2-backend.onrender.com/api/genai/describeimage",{content:msgai.imageurl},
             {
     headers: {
       Authorization: user.token,
@@ -248,7 +248,7 @@ const handleaimedia=async(msgai)=>{
    }
       else{
           try{
-         const res=await axios.post("http://localhost:3000/api/genai/describevideo",{content:msgai.videourl});
+         const res=await axios.post("https://letschatt2-backend.onrender.com/api/genai/describevideo",{content:msgai.videourl});
          if(res.data.success===true){
               setloading("");
             setmsggenai(res.data.message);
