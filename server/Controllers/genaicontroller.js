@@ -80,7 +80,7 @@ export const videodescriptor=async(req,res)=>{
       data: base64,
     },
   },
-  { text: "Please summarize this video(in short)." },
+  { text: "Please summarize this video in atmost 4-5 lines." },
 ];
 const ans= await ai.models.generateContent({
   model: "gemini-2.5-flash",
