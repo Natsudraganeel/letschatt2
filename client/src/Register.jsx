@@ -38,7 +38,7 @@ setdata({...data,[e.target.name]:e.target.value});
           console.log(uploadPhoto);
 
           try{
-      const res=await axios.post("http://localhost:3000/api/auth/register",{
+      const res=await axios.post("https://letschatt2-backend.onrender.com/api/auth/register",{
        name:data.name,
        password:data.password,
        email:data.email,
