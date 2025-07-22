@@ -196,7 +196,12 @@ const handletranslate=async(msgai)=>{
       }
       settranslatepage(true);
       setloading("Loading....");
-       const res=await axios.post("http://localhost:3000/api/genai/translate",{content:msgai});
+       const res=await axios.post("http://localhost:3000/api/genai/translate",{content:msgai},
+         {
+    headers: {
+      Authorization: user.token,
+    },
+  });
        console.log(res.data);
        if(res.data.success===true){
          // setmsggenai(res.data.message);
@@ -222,7 +227,13 @@ const handleaimedia=async(msgai)=>{
      setloading("Loading....");
       if(msgai.imageurl){
          try{
-         const res=await axios.post("http://localhost:3000/api/genai/describeimage",{content:msgai.imageurl});
+         const res=await axios.post("http://localhost:3000/api/genai/describeimage",{content:msgai.imageurl},
+            {
+    headers: {
+      Authorization: user.token,
+    },
+  }
+         );
          if(res.data.success===true){
               setloading("");
             setmsggenai(res.data.message);

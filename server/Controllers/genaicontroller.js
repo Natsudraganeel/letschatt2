@@ -47,7 +47,7 @@ export const imagedescriptor=async(req,res)=>{
       data: base64,
     },
   },
-  { text: "Context of this image(in short)." },
+  { text: "Give me a brief context of this image in 4-5 lines only" },
 ];
 const ans= await ai.models.generateContent({
   model: "gemini-2.5-flash",
