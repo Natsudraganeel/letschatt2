@@ -50,7 +50,7 @@ export const imagedescriptor=async(req,res)=>{
   { text: "Give me a brief context of this image in 4-5 lines only" },
 ];
 const ans= await ai.models.generateContent({
-  model: "gemini-2.5-flash",
+  model: "gemini-2.5-flash",// could have used any other model as well
   contents: contents,
 });
 console.log(content,ans);
