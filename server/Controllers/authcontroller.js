@@ -20,7 +20,7 @@ export const registercontroller=async(req,res)=>{
         const hashedpassword=await hashPassword(password);
         user =await new User({ name, password:hashedpassword, email, profile_pic}).save();
         //sending back the response with status code and json data of the created user
-        res.status(201).send({success:true,
+        res.send({success:true,
            message: 'User has been created',
            user});
     }catch(err){
