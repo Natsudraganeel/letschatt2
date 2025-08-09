@@ -106,7 +106,11 @@ export default function Forgotpassword(){
     async function handlesubmit(e){
             e.preventDefault();
             try{
-            const res=await axios({
+                   let ans=otpinput[0]+otpinput[1]+otpinput[2]+otpinput[3];
+            //  console.log(res.data);
+            //  console.log(sentotp);
+              if(sentotp==ans){
+               const res=await axios({
                 method:"post",
                 url:"https://letschatt2-backend.onrender.com/api/auth/forgotpassword",
                 data:{
@@ -115,24 +119,20 @@ export default function Forgotpassword(){
                 },
                 withCredentials:true
                })
-              let ans=otpinput[0]+otpinput[1]+otpinput[2]+otpinput[3];
-            //  console.log(res.data);
-            //  console.log(sentotp);
-              if(res.data.success===true && sentotp==ans){
-               
+               if(res.data.success===true){
                 console.log(typeof(res.data.token));
-                  localStorage.setItem("token",res.data.token);
                 // document.cookie="token="+res.data.token;
+                localStorage.setItem("token",res.data.token);
                 dispatch(settoken(res.data.token));
                 //alert("success");
                 nav("/");
-             
+               }
+                  else{
+                alert(res.data.message);
               }
-              else if(res.data.success===true && sentotp!==ans){
-                 setclick("The otp entered is wrong.Try resending the otp");
               }
               else{
-                alert(res.data.message);
+                 setclick("The otp entered is wrong.Try resending the otp");
               }
             }
             catch(err){
