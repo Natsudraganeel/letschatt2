@@ -41,7 +41,9 @@ console.log(err.message)
 }
   const googlelogin = useGoogleLogin({// did according to documentation
     onSuccess: responseGoogle,// on success responseGoogle function is called and an object is sent automatically which has code.the code is sent to backend
-    onError:responseGoogle,
+    onError:() => {
+  toast.error("Google login failed");
+},
     flow: 'auth-code',
   });
 
