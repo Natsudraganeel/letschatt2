@@ -15,6 +15,7 @@ export default function Avatar({theuser}){
     function closeForm(e){
         if(e.target.id ==="hello"){
        console.log(e.target);
+              setjet(false);
         // console.log("close")
         setclick(!click);
         // console.log(click);
