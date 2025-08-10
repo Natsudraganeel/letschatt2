@@ -19,9 +19,9 @@ const Messageschema=new  mongoose.Schema({
     default:""
   },
   msgByUserId:{
-    type:mongoose.Schema.ObjectId,
+    type:mongoose.Schema.Types.ObjectId,
     required:true,
-    ref:"User"
+    ref:"users"
   }
 
 
