@@ -209,7 +209,7 @@ export const conversationcontroller=async(req,res)=>{
         "$or":[{ sender:id,receiver:rid },
                 {sender:rid,receiver:id }
             ]
-    });
+    }).populate('message');
     res.send({success:true,
         converse:getconversation?.message || []});
 }
