@@ -40,7 +40,7 @@ io.on("connection", async(socket) => {
     })
     socket.on("contacts",async(userid)=>{
         const allusers=await Conversation.find( {"$or":[{ sender:userid },
-            {receiver:userid }]});
+            {receiver:userid }]}).populate('message');
 
             const theusers=new Set();
             const ans=new Set();
@@ -83,7 +83,7 @@ io.on("connection", async(socket) => {
             "$or":[{ sender:id,receiver:rid },
                     {sender:rid,receiver:id }
                 ]
-        });
+        }).populate('message');
         socket.emit("allmessagesres",getconversation?.message || []);
     })
 
@@ -117,7 +117,7 @@ io.on("connection", async(socket) => {
             "$or":[{ sender:data?.sender,receiver:data?.receiver },
                 {sender:data?.receiver,receiver:data?.sender }
             ]
-        });
+        }).populate('message');
         io.to(data?.sender).emit("message",getconversation?.message || []);
         io.to(data?.receiver).emit("message",getconversation?.message || []);
     })
