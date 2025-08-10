@@ -2,23 +2,24 @@ import mongoose from "mongoose"
 
 const Conversationschema=new  mongoose.Schema({
   sender:{
-    type:mongoose.Schema.ObjectId,
+    type:mongoose.Schema.Types.ObjectId,
     required:true,
-    ref:"User"
+    ref:"users"
   },
   receiver:
   {
-    type:mongoose.Schema.ObjectId,
+    type:mongoose.Schema.Types.ObjectId,
     required:true,
-    ref:"User"
+    ref:"users"
   },
-  message:{
+  message:[
     
-        type:[],
-        
-        default:[]
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'messages'
+        }
     
-  }
+      ]
 
 },{
     timestamps:true ,// created time will be added
