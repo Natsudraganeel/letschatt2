@@ -111,7 +111,7 @@ io.on("connection", async(socket) => {
         })
         const savedmessage =await msg.save();
         const updatedconversation=await Conversation.updateOne({_id:conversation?._id},{
-            "$push": {message: savedmessage}}
+            "$push": {message: savedmessage._id}}
         );
         const getconversation=await Conversation.findOne({
             "$or":[{ sender:data?.sender,receiver:data?.receiver },
