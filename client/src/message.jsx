@@ -534,7 +534,7 @@ function handledate(msgtime){
                               muted
                               autoPlay
                             />}
-                     <form onSubmit={handlesubmit}>
+                     <form onSubmit={handlesubmit} className="relative">
                      <div className="absolute left-2 top-7  text-gray-400" onClick={()=>{setopenemoji(true)}}>
                      <MdOutlineEmojiEmotions  size={20}  />
                      </div>
@@ -546,7 +546,7 @@ function handledate(msgtime){
                      </div>
                      </div>
                      :
-                     <form className="mb-4  w-full  flex justify-center items-center" onSubmit={handlesubmit}>
+                     <form className="mb-4  w-full  flex justify-center items-center relative" onSubmit={handlesubmit}>
                      <button onClick={()=>{setadd(!add)}} className="w-50 h-50  ">
                      <IoAddCircle size={45}/>
                      </button>
