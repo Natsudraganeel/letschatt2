@@ -538,7 +538,7 @@ function handledate(msgtime){
                      <div className="absolute left-2 top-7  text-gray-400" onClick={()=>{setopenemoji(true)}}>
                      <MdOutlineEmojiEmotions  size={20}  />
                      </div>
-                     <input value={message.text} onChange={handletext} type="text" placeholder="Type here ...." className="pl-2  bg-slate-100  rounded-2xl w-10/12 h-10 "/>
+                     <input value={message.text} onChange={handletext} type="text" placeholder="Type here ...." className="pl-8  bg-slate-100  rounded-2xl w-10/12 h-10 "/>
                      <button type="submit"  className=" w-50 h-50 p-2 rounded-full hover:bg-slate-400">
                      <RiSendPlaneFill size={35} color={"yellow"}/>
                      </button>
@@ -551,7 +551,7 @@ function handledate(msgtime){
                      <IoAddCircle size={45}/>
                      </button>
                      <MdOutlineEmojiEmotions  size={20} className="absolute left-12 text-gray-400" onClick={()=>{setopenemoji(!openemoji)}}/>
-                     <input value={message.text} onChange={handletext} type="text" placeholder="Type here ...." className="pl-2 pr-2  bg-slate-100  rounded-2xl w-11/12 h-10 "/>
+                     <input value={message.text} onChange={handletext} type="text" placeholder="Type here ...." className="pl-8 pr-2  bg-slate-100  rounded-2xl w-11/12 h-10 "/>
                      <button type="submit"  className=" w-50 h-50 p-2 rounded-full hover:bg-slate-400">
                      <RiSendPlaneFill size={35}/>
                      </button>
