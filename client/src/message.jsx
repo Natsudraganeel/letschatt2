@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import toast, { Toaster } from 'react-hot-toast';
 import { IoAddCircle } from "react-icons/io5";
+import EmojiPicker from 'emoji-picker-react';
+import { MdOutlineEmojiEmotions } from "react-icons/md";
 import { FaImage } from "react-icons/fa6";
 import { ImCross } from "react-icons/im";
 import { PiTranslate } from "react-icons/pi";
@@ -103,6 +105,18 @@ setmessage((pre)=>{
 setadd(!add)
 console.log(message)
 
+}
+const handleemoji=(emojiData,e)=>{
+   console.log(emojiData.emoji);
+   console.log(message.text)
+   var x=emojiData.emoji;
+
+   setmessage((pre)=>{
+      return {
+         ...pre,
+         text:pre.text+x
+      }
+   })
 }
 const handletext=(e)=>{
 
@@ -494,6 +508,13 @@ function handledate(msgtime){
                          
                      </div>
                      }
+         { 
+       openemoji &&       
+      <div id="emojipage" className="fixed inset-0 z-30 flex items-end justify-center left-4 bottom-28 " onClick={(e)=>{if(e.target.id==="emojipage"){setopenemoji(false)}}}>
+      <EmojiPicker width={300} height={400} onEmojiClick={handleemoji}/>
+      </div>
+                     
+                }
                     
                      
                      
@@ -514,7 +535,10 @@ function handledate(msgtime){
                               autoPlay
                             />}
                      <form onSubmit={handlesubmit}>
-                     <input onChange={handletext} type="text" placeholder="Type here ...." className="pl-2  bg-slate-100  rounded-2xl w-10/12 h-10 "/>
+                     <div className="absolute left-2 top-7  text-gray-400" onClick={()=>{setopenemoji(true)}}>
+                     <MdOutlineEmojiEmotions  size={20}  />
+                     </div>
+                     <input value={message.text} onChange={handletext} type="text" placeholder="Type here ...." className="pl-2  bg-slate-100  rounded-2xl w-10/12 h-10 "/>
                      <button type="submit"  className=" w-50 h-50 p-2 rounded-full hover:bg-slate-400">
                      <RiSendPlaneFill size={35} color={"yellow"}/>
                      </button>
@@ -526,7 +550,8 @@ function handledate(msgtime){
                      <button onClick={()=>{setadd(!add)}} className="w-50 h-50  ">
                      <IoAddCircle size={45}/>
                      </button>
-                     <input onChange={handletext} type="text" placeholder="Type here ...." className="pl-2 pr-2  bg-slate-100  rounded-2xl w-11/12 h-10 "/>
+                     <MdOutlineEmojiEmotions  size={20} className="absolute left-12 text-gray-400" onClick={()=>{setopenemoji(!openemoji)}}/>
+                     <input value={message.text} onChange={handletext} type="text" placeholder="Type here ...." className="pl-2 pr-2  bg-slate-100  rounded-2xl w-11/12 h-10 "/>
                      <button type="submit"  className=" w-50 h-50 p-2 rounded-full hover:bg-slate-400">
                      <RiSendPlaneFill size={35}/>
                      </button>

@@ -21,6 +21,7 @@ const [hide,sethide]=useState(false);
   const [friend,setfriend]=useState();
        const user = useSelector(state => state.user);
        const [aipage,setaipage]=useState(false);
+         const [openemoji,setopenemoji]=useState(false);
       
   useEffect(()=>{
 console.log(msg);
@@ -110,7 +111,9 @@ try{
           <Contacts  setmsg={setmsg} setfriend={setfriend} hide={hide} sethide={sethide} allmessage={allmessage}/>
           {
             msg===true ?
-            <Message  friend={friend} sethide={sethide} hide={hide} setmsg={setmsg} allmessage={allmessage} setallmessage={setallmessage} />
+            <Message  friend={friend} sethide={sethide} hide={hide} setmsg={setmsg} allmessage={allmessage} setallmessage={setallmessage} 
+              openemoji={openemoji} setopenemoji={setopenemoji}
+            />
             :
          <DefaultMessage click={click} setclick={setclick}/>
           
