@@ -16,7 +16,7 @@ import {upload} from "./helpers/uploadfile.js";
 import fileDownload from 'js-file-download' //https://stackoverflow.com/questions/50694881/how-to-download-file-in-react-js
 import axios from "axios"
 import moment from "moment"
-export default function Message({friend,sethide,hide,setmsg,allmessage,setallmessage}){
+export default function Message({friend,sethide,hide,setmsg,allmessage,setallmessage,openemoji,setopenemoji}){
    const formdiv={
       border:"0.5px solid black",
       padding :"30px 20px 20px 20px",
